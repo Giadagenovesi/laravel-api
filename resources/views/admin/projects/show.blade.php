@@ -21,4 +21,6 @@
         @endforelse
     </div>
     <p class="mt-4">{{ $project->content }}</p>
+
+    <a class="btn btn-outline-success" href="{{ url()->previous() }}">Back</a>
 @endsection
