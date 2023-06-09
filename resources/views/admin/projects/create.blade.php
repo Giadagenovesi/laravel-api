@@ -22,7 +22,21 @@
             </select>
         </div>
 
-        <div class="mb-3">
+        <div>
+            <h5>Tecnologie</h5>
+            @foreach ($technologies as $technology)
+                <div class="form-check">
+                    {{-- L'input deve essere selezionato se id del tag è contenuto nell'array old(['tags'])--}}
+                    <input class="form-check-input" name="technologies[]" type="checkbox" value="{{ $technology->id }}"
+                        id="technology-{{ $technology->id }}" @checked(in_array($technology->id, old('technologies',[])))>
+                    <label class="form-check-label" for="technology-{{ $technology->id }}">
+                        {{ $technology->name }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="my-4">
             <label for="content" class="form-label">Contentuto</label>
             <textarea class="form-control" id="content" rows="3" name="content">{{ old('content') }}</textarea>
         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use App\Models\Type;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -30,8 +31,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        return view('admin.projects.create', compact('technologies','types'));
     }
 
     /**
@@ -44,8 +46,15 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
-        $post = Project::create($data);
+        $project = Project::create($data);
+
+        if ($request->has('technologies')) {
+            // Inserimento nella tabella ponte
+            $project->technologies()->attach($request->technologies);
+        }
+
         return redirect()->route('admin.projects.index');
+
 
     }
 
