@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     public function index() {
-        $projects = Project::all();
+        $projects = Project::all()->paginate(10);
         return response()->json([
-            'success'=> true,
+            'success'=> true, // non è obbligatorio, mi serve solo per dire che la chiamata è avvenuta con successo
             'results'=>$projects
         ]);
     }
