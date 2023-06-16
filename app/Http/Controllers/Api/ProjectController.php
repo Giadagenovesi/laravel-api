@@ -17,8 +17,11 @@ class ProjectController extends Controller
     }
 
     public function show($slug) {
+        //metto first perchè non voglio tutti gli elementi, ma solo il primo
         $project = Project::with('technologies', 'type')->where('slug', $slug)->first();
 
+
+        //se il progetto esiste mi da success true altrimenti mi restituisce false 
         if ($project) {
             return response()->json([
                 'success' => true,
@@ -28,7 +31,7 @@ class ProjectController extends Controller
             return response()->json([
                 'success' => false,
                 'error' => 'Nessun post trovato'
-            ]);
+            ])->setStatusCode(404); //mi restituisce errore 404 perchè la pagina non è stata trovata
         }
     }
 }
